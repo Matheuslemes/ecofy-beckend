@@ -1,4 +1,4 @@
-package br.com.ecofy.auth.domain.valueobject;
+package br.com.ecofy.auth.core.domain.valueobject;
 
 import java.io.Serializable;
 import java.util.Objects;

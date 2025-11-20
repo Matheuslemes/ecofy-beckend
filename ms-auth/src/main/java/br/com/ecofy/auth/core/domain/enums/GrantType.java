@@ -1,4 +1,4 @@
-package br.com.ecofy.auth.domain.enums;
+package br.com.ecofy.auth.core.domain.enums;
 
 public enum GrantType {
 
