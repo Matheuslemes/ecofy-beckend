@@ -18,10 +18,7 @@ final class PersistenceMapper {
         throw new AssertionError("PersistenceMapper is a utility class and should not be instantiated");
     }
 
-    // ========================================================================
     // AuthUser
-    // ========================================================================
-
     static AuthUserEntity toEntity(AuthUser user) {
         Objects.requireNonNull(user, "user must not be null");
 
@@ -100,10 +97,7 @@ final class PersistenceMapper {
         return new Permission(e.getName(), e.getDescription(), e.getDomain());
     }
 
-    // ========================================================================
     // ClientApplication
-    // ========================================================================
-
     static ClientApplication toDomain(ClientApplicationEntity e) {
         Objects.requireNonNull(e, "ClientApplicationEntity must not be null");
 
@@ -113,9 +107,9 @@ final class PersistenceMapper {
                 e.getClientSecretHash(),
                 e.getName(),
                 e.getClientType(),
-                e.getGrantTypes(),   // Set<GrantType>
+                e.getGrantTypes(), // Set<GrantType>
                 e.getRedirectUris(), // Set<String>
-                e.getScopes(),       // Set<String>
+                e.getScopes(), // Set<String>
                 e.isFirstParty(),
                 e.isActive(),
                 e.getCreatedAt(),
@@ -142,10 +136,7 @@ final class PersistenceMapper {
                 .build();
     }
 
-    // ========================================================================
     // RefreshToken
-    // ========================================================================
-
     static RefreshToken toDomain(RefreshTokenEntity e) {
         Objects.requireNonNull(e, "RefreshTokenEntity must not be null");
 
@@ -176,10 +167,7 @@ final class PersistenceMapper {
                 .build();
     }
 
-    // ========================================================================
     // JWK
-    // ========================================================================
-
     static JwkKey toDomain(JwkKeyEntity e) {
         Objects.requireNonNull(e, "JwkKeyEntity must not be null");
 

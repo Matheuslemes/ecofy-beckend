@@ -90,7 +90,6 @@ public class MailProviderAdapter implements SendVerificationEmailPort, SendReset
     }
 
     // Helpers
-
     private SimpleMailMessage baseMessage(AuthUser user) {
         String from = Objects.requireNonNullElse(props.getFrom(), "no-reply@ecofy.local");
 

@@ -60,10 +60,7 @@ public class TokenValidationService implements ValidateTokenUseCase {
         return claims;
     }
 
-    // =====================================================================
     // Utils
-    // =====================================================================
-
     private String maskToken(String token) {
         if (token == null || token.isBlank()) return "***";
         return token.length() > 12 ? token.substring(0, 12) + "..." : "***";

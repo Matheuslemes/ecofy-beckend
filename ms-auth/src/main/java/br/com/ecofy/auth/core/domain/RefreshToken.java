@@ -97,10 +97,7 @@ public class RefreshToken {
         );
     }
 
-    // ========================================================================
     // Getters (imutáveis externamente)
-    // ========================================================================
-
     public String id() {
         return id;
     }
@@ -133,10 +130,7 @@ public class RefreshToken {
         return type;
     }
 
-    // ========================================================================
     // Regras de domínio
-    // ========================================================================
-
     public boolean isExpired() {
         return Instant.now().isAfter(expiresAt);
     }
@@ -159,10 +153,7 @@ public class RefreshToken {
         this.revoked = true;
     }
 
-    // ========================================================================
     // Internals
-    // ========================================================================
-
     private String normalizeTokenValue(String value) {
         Objects.requireNonNull(value, "tokenValue must not be null");
         String trimmed = value.trim();
@@ -181,10 +172,7 @@ public class RefreshToken {
         return trimmed;
     }
 
-    // ========================================================================
     // equals / hashCode / toString
-    // ========================================================================
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

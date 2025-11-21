@@ -119,10 +119,7 @@ public class JwtNimbusTokenProviderAdapter implements JwtTokenProviderPort {
         return generateToken(subject, claims, ttlSeconds, TokenType.PASSWORD_RESET);
     }
 
-    // ======================================================================
     // Núcleo de geração
-    // ======================================================================
-
     private JwtToken generateToken(String subject,
                                    Map<String, Object> claims,
                                    long ttlSeconds,
@@ -175,10 +172,7 @@ public class JwtNimbusTokenProviderAdapter implements JwtTokenProviderPort {
         return new JwtToken(serialized, exp, type);
     }
 
-    // ======================================================================
     // Validação / parsing
-    // ======================================================================
-
     @Override
     public boolean isValid(String token) {
         try {
@@ -250,10 +244,7 @@ public class JwtNimbusTokenProviderAdapter implements JwtTokenProviderPort {
         }
     }
 
-    // ======================================================================
     // Chaves / JWK
-    // ======================================================================
-
     private JWSSigner createSigner(RSAPrivateKey privateKey) {
         log.debug("[JwtNimbusTokenProviderAdapter] - [createSigner] -> Criando RSASSASigner");
         return new RSASSASigner(privateKey);

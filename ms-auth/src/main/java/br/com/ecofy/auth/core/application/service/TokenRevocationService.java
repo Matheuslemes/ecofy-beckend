@@ -8,7 +8,6 @@ import java.util.Objects;
 
 /**
  * Serviço responsável por revogar tokens emitidos pelo MS Auth.
- *
  * Atualmente:
  *  - Revoga refresh tokens (persistidos em store especializado)
  *  - Pode ser estendido para suportar revogação de access tokens

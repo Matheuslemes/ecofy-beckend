@@ -122,10 +122,7 @@ public class RegisterUserService implements RegisterUserUseCase {
         return persisted;
     }
 
-    // =====================================================================
     // Helpers
-    // =====================================================================
-
     private String maskToken(String token) {
         if (token == null || token.isBlank()) return "***";
         return token.length() > 10

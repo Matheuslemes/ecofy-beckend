@@ -8,7 +8,6 @@ import java.util.*;
 
 /**
  * Agregado que representa um client OAuth2/OIDC registrado no ms-auth.
- *
  * Responsável por encapsular:
  *  - tipo do client (confidential/public)
  *  - grants suportados
@@ -110,10 +109,7 @@ public class ClientApplication {
         );
     }
 
-    // ========================================================================
     // Getters (somente leitura / imutáveis externamente)
-    // ========================================================================
-
     public String id() {
         return id;
     }
@@ -162,10 +158,7 @@ public class ClientApplication {
         return updatedAt;
     }
 
-    // ========================================================================
     // Regras de negócio
-    // ========================================================================
-
     public boolean supportsGrant(GrantType grantType) {
         return grantTypes.contains(Objects.requireNonNull(grantType, "grantType must not be null"));
     }

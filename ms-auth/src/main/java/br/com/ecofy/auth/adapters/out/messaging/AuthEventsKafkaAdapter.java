@@ -30,7 +30,6 @@ public class AuthEventsKafkaAdapter implements PublishAuthEventPort {
     }
 
     // PUBLISHERS
-
     @Override
     public void publish(UserRegisteredEvent event) {
         Objects.requireNonNull(event, "event must not be null");
@@ -75,10 +74,7 @@ public class AuthEventsKafkaAdapter implements PublishAuthEventPort {
         sendEvent(TOPIC_PASSWORD_RESET_REQUESTED, key, event);
     }
 
-    // ============================================================
     // HELPER – usando CompletableFuture direto
-    // ============================================================
-
     private void sendEvent(String topic, String key, Object payload) {
 
         CompletableFuture<SendResult<String, Object>> future =

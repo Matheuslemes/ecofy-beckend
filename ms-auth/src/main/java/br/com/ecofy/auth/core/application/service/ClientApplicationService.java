@@ -96,10 +96,7 @@ public class ClientApplicationService implements RegisterClientApplicationUseCas
         return saved;
     }
 
-    // ========================================================================
     // Regras de secret
-    // ========================================================================
-
     private boolean requiresSecret(ClientType clientType) {
         return clientType == ClientType.CONFIDENTIAL
                 || clientType == ClientType.MACHINE_TO_MACHINE;

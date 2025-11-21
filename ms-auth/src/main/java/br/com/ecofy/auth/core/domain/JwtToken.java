@@ -8,7 +8,6 @@ import java.util.Objects;
 
 /**
  * Value object que representa um JWT emitido pelo ms-auth.
- *
  * Imutável, sem comportamento criptográfico – apenas metadados.
  */
 public final class JwtToken {
@@ -33,10 +32,7 @@ public final class JwtToken {
         }
     }
 
-    // ========================================================================
     // Normalização
-    // ========================================================================
-
     private String normalizeToken(String raw) {
         Objects.requireNonNull(raw, "value must not be null");
         String token = raw.trim();
@@ -46,10 +42,7 @@ public final class JwtToken {
         return token;
     }
 
-    // ========================================================================
     // Getters imutáveis
-    // ========================================================================
-
     public String value() {
         return value;
     }
@@ -62,10 +55,7 @@ public final class JwtToken {
         return type;
     }
 
-    // ========================================================================
     // Métodos utilitários de domínio
-    // ========================================================================
-
     public boolean isExpired() {
         return Instant.now().isAfter(expiresAt);
     }
@@ -90,10 +80,7 @@ public final class JwtToken {
         return !isExpired() && timeToExpire().compareTo(threshold) <= 0;
     }
 
-    // ========================================================================
     // equals, hashCode e toString seguro
-    // ========================================================================
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

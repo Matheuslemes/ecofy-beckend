@@ -10,7 +10,6 @@ import java.util.*;
 /**
  * Serviço responsável por montar o JWKS exposto em:
  *      /.well-known/jwks.json
- *
  * Esta implementação trata apenas metadados mínimos (kid, alg, use),
  * mas está preparada para incluir parâmetros completos RSA (n, e)
  * assim que o adapter de persistência fornecer esses valores.

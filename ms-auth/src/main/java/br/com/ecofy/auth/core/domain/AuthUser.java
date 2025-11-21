@@ -73,7 +73,6 @@ public class AuthUser {
     }
 
     // Factories
-
     public static AuthUser newPendingUser(EmailAddress email,
                                           PasswordHash passwordHash,
                                           String firstName,
@@ -97,10 +96,7 @@ public class AuthUser {
         );
     }
 
-    // ========================================================================
     // Getters (imutáveis / de leitura)
-    // ========================================================================
-
     public AuthUserId id() {
         return id;
     }
@@ -157,10 +153,7 @@ public class AuthUser {
         return Collections.unmodifiableSet(directPermissions);
     }
 
-    // ========================================================================
     // Regras de negócio
-    // ========================================================================
-
     public String fullName() {
         String first = Objects.toString(firstName, "").trim();
         String last = Objects.toString(lastName, "").trim();
@@ -227,11 +220,9 @@ public class AuthUser {
         touch();
     }
 
-    // ========================================================================
     // Internals
-    // ========================================================================
-
     private void touch() {
         this.updatedAt = Instant.now();
     }
+
 }

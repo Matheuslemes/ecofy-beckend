@@ -6,7 +6,6 @@ import java.util.Objects;
 
 /**
  * Representação de uma chave pública exposta via JWKS no domínio.
- * <p>
  * Importante: aqui não há detalhes de implementação criptográfica, apenas
  * metadados necessários para publicação e rotação de chaves.
  */
@@ -18,7 +17,7 @@ public class JwkKey {
     private final String keyId;
     private final String publicKeyPem;
     private final String algorithm; // ex.: "RS256"
-    private final String use;       // "sig" ou "enc"
+    private final String use; // "sig" ou "enc"
     private final Instant createdAt;
     private final boolean active;
 
@@ -37,10 +36,7 @@ public class JwkKey {
         this.active = active;
     }
 
-    // ========================================================================
     // Getters
-    // ========================================================================
-
     public String keyId() {
         return keyId;
     }
@@ -65,9 +61,7 @@ public class JwkKey {
         return active;
     }
 
-    // ========================================================================
     // Helpers de domínio
-    // ========================================================================
 
     /**
      * Indica se a chave é usada para assinatura de tokens ("sig").
@@ -83,10 +77,7 @@ public class JwkKey {
         return USE_ENCRYPTION.equalsIgnoreCase(use);
     }
 
-    // ========================================================================
     // Internals
-    // ========================================================================
-
     private String normalizeAlgorithm(String algorithm) {
         Objects.requireNonNull(algorithm, "algorithm must not be null");
         String trimmed = algorithm.trim();
@@ -109,10 +100,7 @@ public class JwkKey {
         return normalized;
     }
 
-    // ========================================================================
     // equals / hashCode / toString
-    // ========================================================================
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

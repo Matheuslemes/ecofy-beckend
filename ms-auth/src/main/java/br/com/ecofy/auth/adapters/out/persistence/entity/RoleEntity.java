@@ -30,4 +30,5 @@ public class RoleEntity {
     )
     @Builder.Default
     private Set<PermissionEntity> permissions = new HashSet<>();
+
 }

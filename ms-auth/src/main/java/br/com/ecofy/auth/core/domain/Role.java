@@ -22,10 +22,7 @@ public final class Role {
                 : new HashSet<>();
     }
 
-    // ========================================================================
     // Getters
-    // ========================================================================
-
     public String name() {
         return name;
     }
@@ -38,9 +35,7 @@ public final class Role {
         return Collections.unmodifiableSet(permissions);
     }
 
-    // ========================================================================
     // Regras de domínio
-    // ========================================================================
 
     /**
      * Verifica se o role contém exatamente uma permissão com esse nome.
@@ -92,9 +87,7 @@ public final class Role {
         return new Role(this.name, this.description, newPerms);
     }
 
-    // ========================================================================
     // Internals
-    // ========================================================================
 
     private String normalizeName(String rawName) {
         Objects.requireNonNull(rawName, "name must not be null");
@@ -111,9 +104,7 @@ public final class Role {
         return trimmed;
     }
 
-    // ========================================================================
     // equals / hashCode / toString
-    // ========================================================================
 
     // equals/hashCode por name (mantém comportamento atual)
     @Override

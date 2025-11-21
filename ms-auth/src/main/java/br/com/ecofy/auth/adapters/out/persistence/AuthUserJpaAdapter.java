@@ -57,7 +57,7 @@ public class AuthUserJpaAdapter implements SaveAuthUserPort, LoadAuthUserByEmail
         log.debug("[AuthUserJpaAdapter] - [save] -> Usuário persistido com sucesso id={} email={}",
                 saved.getId(), saved.getEmail());
 
-        // Se no futuro você tiver coleções de roles/perms mapeadas com @ManyToMany/@OneToMany,
+        // Se no futuro tiver coleções de roles/perms mapeadas com @ManyToMany/@OneToMany,
         // o PersistenceMapper centraliza esse carregamento.
         return PersistenceMapper.toDomain(saved, saved.getRoles(), saved.getPermissions());
     }

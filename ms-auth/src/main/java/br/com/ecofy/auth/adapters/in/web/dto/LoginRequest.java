@@ -7,7 +7,8 @@ public record LoginRequest(
         @NotBlank
         String clientId,
 
-        String clientSecret,        // pode ser null em client public
+        // pode ser null em client public
+        String clientSecret,
 
         @NotBlank
         String username,

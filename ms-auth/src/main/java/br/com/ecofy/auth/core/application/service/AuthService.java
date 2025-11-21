@@ -57,10 +57,7 @@ public class AuthService implements AuthenticateUserUseCase, RefreshTokenUseCase
         this.refreshTokenTtlSeconds = refreshTokenTtlSeconds;
     }
 
-    // ========================================================================
     // PASSWORD GRANT (username/password)
-    // ========================================================================
-
     @Override
     public AuthenticationResult authenticate(AuthenticationCommand command) {
         Objects.requireNonNull(command, "command must not be null");
@@ -136,10 +133,7 @@ public class AuthService implements AuthenticateUserUseCase, RefreshTokenUseCase
         );
     }
 
-    // ========================================================================
     // REFRESH TOKEN GRANT
-    // ========================================================================
-
     @Override
     public RefreshTokenResult refresh(RefreshTokenCommand command) {
         Objects.requireNonNull(command, "command must not be null");
@@ -244,10 +238,7 @@ public class AuthService implements AuthenticateUserUseCase, RefreshTokenUseCase
         );
     }
 
-    // ========================================================================
     // Helpers de domínio / regras de grant
-    // ========================================================================
-
     /**
      * Regras para PASSWORD grant:
      *  - client deve estar ativo

@@ -21,10 +21,7 @@ public class RefreshTokenJpaAdapter implements RefreshTokenStorePort {
         this.repository = Objects.requireNonNull(repository, "repository must not be null");
     }
 
-    // ========================================================================
     // SAVE
-    // ========================================================================
-
     @Override
     @Transactional
     public RefreshToken save(RefreshToken token) {
@@ -46,10 +43,7 @@ public class RefreshTokenJpaAdapter implements RefreshTokenStorePort {
         return PersistenceMapper.toDomain(saved);
     }
 
-    // ========================================================================
     // FIND BY TOKEN VALUE
-    // ========================================================================
-
     @Override
     @Transactional(readOnly = true)
     public Optional<RefreshToken> findByTokenValue(String tokenValue) {
@@ -70,10 +64,7 @@ public class RefreshTokenJpaAdapter implements RefreshTokenStorePort {
                 });
     }
 
-    // ========================================================================
     // REVOKE
-    // ========================================================================
-
     @Override
     @Transactional
     public void revoke(String tokenValue) {

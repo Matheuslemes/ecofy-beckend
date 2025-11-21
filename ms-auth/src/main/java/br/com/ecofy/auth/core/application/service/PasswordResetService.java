@@ -16,7 +16,6 @@ import java.util.UUID;
  * Serviço responsável pelo fluxo completo de:
  *  1. Solicitação de reset de senha
  *  2. Consumo do token e definição da nova senha
- *
  * Princípios aplicados:
  *  - Logs estruturados (sem expor tokens ou dados sensíveis)
  *  - Fail-fast em dependências nulas
@@ -54,10 +53,7 @@ public class PasswordResetService implements RequestPasswordResetUseCase, ResetP
                 Objects.requireNonNull(publishAuthEventPort, "publishAuthEventPort must not be null");
     }
 
-    // =====================================================================
     // REQUEST RESET
-    // =====================================================================
-
     @Override
     public void requestReset(RequestPasswordResetCommand command) {
         Objects.requireNonNull(command, "command must not be null");
@@ -102,10 +98,7 @@ public class PasswordResetService implements RequestPasswordResetUseCase, ResetP
         );
     }
 
-    // =====================================================================
     // RESET PASSWORD
-    // =====================================================================
-
     @Override
     public void resetPassword(ResetPasswordCommand command) {
         Objects.requireNonNull(command, "command must not be null");

@@ -48,6 +48,7 @@ public class PasswordController {
     })
     @PostMapping(path = "/reset-request", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> requestReset(@Valid @RequestBody PasswordResetRequest request) {
+
         // Não logar senha (não vem aqui) e evitar logar dados sensíveis demais
         log.debug("[PasswordController] - [requestReset] -> Solicitando reset de senha email={}", request.email());
 

@@ -5,7 +5,6 @@ import java.util.Objects;
 
 /**
  * Permissão granular do sistema, por exemplo: "transactions:read".
- *
  * Convenções:
  * - name: permissão completa, ex.: "transactions:read", "users:write"
  * - domain: agrupador lógico (ex.: "transactions", "users" ou "*")
@@ -25,10 +24,7 @@ public final class Permission {
         this.domain = normalizeDomain(domain);
     }
 
-    // ========================================================================
     // Getters
-    // ========================================================================
-
     public String name() {
         return name;
     }
@@ -41,9 +37,7 @@ public final class Permission {
         return domain;
     }
 
-    // ========================================================================
     // Regras de domínio
-    // ========================================================================
 
     /**
      * Verifica se esta permissão implica outra permissão.
@@ -104,10 +98,7 @@ public final class Permission {
         return this.name.endsWith(":*") && this.name.length() > 2;
     }
 
-    // ========================================================================
     // Internals
-    // ========================================================================
-
     private String normalizeName(String rawName) {
         Objects.requireNonNull(rawName, "name must not be null");
         String trimmed = rawName.trim();
@@ -125,9 +116,7 @@ public final class Permission {
         return rawDomain.trim().toLowerCase(Locale.ROOT);
     }
 
-    // ========================================================================
     // equals / hashCode / toString
-    // ========================================================================
 
     // equals/hashCode por name (mantém comportamento atual)
     @Override
