@@ -2,6 +2,7 @@ package br.com.ecofy.auth.adapters.out.persistence;
 
 import br.com.ecofy.auth.adapters.out.persistence.entity.*;
 import br.com.ecofy.auth.core.domain.*;
+import br.com.ecofy.auth.core.domain.enums.GrantType;
 import br.com.ecofy.auth.core.domain.enums.TokenType;
 import br.com.ecofy.auth.core.domain.valueobject.AuthUserId;
 import br.com.ecofy.auth.core.domain.valueobject.EmailAddress;
@@ -97,9 +98,30 @@ final class PersistenceMapper {
         return new Permission(e.getName(), e.getDescription(), e.getDomain());
     }
 
-    // ClientApplication
     static ClientApplication toDomain(ClientApplicationEntity e) {
         Objects.requireNonNull(e, "ClientApplicationEntity must not be null");
+
+        Set<GrantType> grantTypes = e.getGrantTypes() == null
+                ? Collections.emptySet()
+                : e.getGrantTypes().stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toUnmodifiableSet());
+
+        Set<String> redirectUris = e.getRedirectUris() == null
+                ? Collections.emptySet()
+                : e.getRedirectUris().stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toUnmodifiableSet());
+
+        Set<String> scopes = e.getScopes() == null
+                ? Collections.emptySet()
+                : e.getScopes().stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toUnmodifiableSet());
 
         return new ClientApplication(
                 e.getId(),
@@ -107,15 +129,17 @@ final class PersistenceMapper {
                 e.getClientSecretHash(),
                 e.getName(),
                 e.getClientType(),
-                e.getGrantTypes(),
-                e.getRedirectUris(),
-                e.getScopes(),
+                grantTypes,
+                redirectUris,
+                scopes,
                 e.isFirstParty(),
                 e.isActive(),
                 e.getCreatedAt(),
                 e.getUpdatedAt()
         );
     }
+
+
 
     static ClientApplicationEntity toEntity(ClientApplication c) {
         Objects.requireNonNull(c, "clientApplication must not be null");

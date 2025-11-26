@@ -76,8 +76,12 @@ public class AuthUser {
     public static AuthUser newPendingUser(EmailAddress email,
                                           PasswordHash passwordHash,
                                           String firstName,
-                                          String lastName) {
+                                          String lastName,
+                                          String locale,
+                                          Set<Role> roles) {
         Instant now = Instant.now();
+        String effectiveLocale = (locale != null && !locale.isBlank()) ? locale : "pt-BR";
+
         return new AuthUser(
                 AuthUserId.newId(),
                 email,
@@ -86,8 +90,8 @@ public class AuthUser {
                 false,
                 firstName,
                 lastName,
-                "pt-BR",
-                Set.of(),
+                effectiveLocale,
+                roles != null ? roles : Set.of(),
                 Set.of(),
                 now,
                 now,

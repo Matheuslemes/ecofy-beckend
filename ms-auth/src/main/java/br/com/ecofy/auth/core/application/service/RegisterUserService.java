@@ -1,6 +1,7 @@
 package br.com.ecofy.auth.core.application.service;
 
 import br.com.ecofy.auth.core.domain.AuthUser;
+import br.com.ecofy.auth.core.domain.Role;
 import br.com.ecofy.auth.core.domain.event.UserRegisteredEvent;
 import br.com.ecofy.auth.core.domain.valueobject.EmailAddress;
 import br.com.ecofy.auth.core.domain.valueobject.PasswordHash;
@@ -9,17 +10,9 @@ import br.com.ecofy.auth.core.port.out.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
-/**
- * Serviço responsável pelo fluxo completo de registro de um usuário:
- *  - validações de email
- *  - criação do usuário
- *  - hashing seguro da senha
- *  - envio do e-mail de verificação (opcional)
- *  - publicação de evento de domínio
- */
 @Slf4j
 @Service
 public class RegisterUserService implements RegisterUserUseCase {
@@ -51,10 +44,24 @@ public class RegisterUserService implements RegisterUserUseCase {
         Objects.requireNonNull(command, "command must not be null");
 
         EmailAddress email = new EmailAddress(command.email());
+        String locale = command.locale() != null ? command.locale() : "pt-BR";
+
+        // garante pelo menos AUTH_USER se nada vier
+        List<String> roleNames = (command.roles() == null || command.roles().isEmpty())
+                ? List.of("AUTH_USER")
+                : command.roles();
+
+        // mapeia nomes de roles para objetos Role de domínio (sem permissões diretas por enquanto)
+        Set<Role> roles = roleNames.stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(name -> new Role(name, null, Set.of()))
+                .collect(Collectors.toSet());
 
         log.debug(
-                "[RegisterUserService] - [register] -> Iniciando registro de usuário email={} firstName={} lastName={}",
-                email.value(), command.firstName(), command.lastName()
+                "[RegisterUserService] - [register] -> Iniciando registro de usuário email={} firstName={} lastName={} locale={} roles={}",
+                email.value(), command.firstName(), command.lastName(), locale, roleNames
         );
 
         // 1 — Verifica se já existe usuário com o email informado
@@ -74,7 +81,9 @@ public class RegisterUserService implements RegisterUserUseCase {
                 email,
                 passwordHash,
                 command.firstName(),
-                command.lastName()
+                command.lastName(),
+                locale,
+                roles
         );
 
         if (command.autoConfirmEmail()) {
@@ -90,9 +99,10 @@ public class RegisterUserService implements RegisterUserUseCase {
         AuthUser persisted = saveAuthUserPort.save(newUser);
 
         log.debug(
-                "[RegisterUserService] - [register] -> Usuário persistido userId={} emailVerified={}",
+                "[RegisterUserService] - [register] -> Usuário persistido userId={} emailVerified={} status={}",
                 persisted.id().value(),
-                persisted.isEmailVerified()
+                persisted.isEmailVerified(),
+                persisted.status()
         );
 
         // 5 — Envia e-mail de verificação se necessário

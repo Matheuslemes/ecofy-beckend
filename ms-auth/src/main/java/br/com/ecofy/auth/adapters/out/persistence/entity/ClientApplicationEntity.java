@@ -37,7 +37,10 @@ public class ClientApplicationEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "auth_client_grants",
-            joinColumns = @JoinColumn(name = "client_id")
+            joinColumns = @JoinColumn(
+                    name = "client_id",              // coluna na tabela de grants
+                    referencedColumnName = "client_id" // coluna na tabela auth_client_applications
+            )
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "grant_type", length = 32)
@@ -46,7 +49,10 @@ public class ClientApplicationEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "auth_client_redirect_uris",
-            joinColumns = @JoinColumn(name = "client_id")
+            joinColumns = @JoinColumn(
+                    name = "client_id",
+                    referencedColumnName = "client_id"
+            )
     )
     @Column(name = "redirect_uri", length = 512)
     private Set<String> redirectUris;
@@ -54,7 +60,10 @@ public class ClientApplicationEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "auth_client_scopes",
-            joinColumns = @JoinColumn(name = "client_id")
+            joinColumns = @JoinColumn(
+                    name = "client_id",
+                    referencedColumnName = "client_id"
+            )
     )
     @Column(name = "scope", length = 64)
     private Set<String> scopes;

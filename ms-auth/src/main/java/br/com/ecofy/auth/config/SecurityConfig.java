@@ -52,7 +52,7 @@ public class SecurityConfig {
                                 "/api/password/**",
                                 "/.well-known/jwks.json"
                         ).permitAll()
-                        // demais endpoints precisam de autenticação
+                        .requestMatchers("/api/admin/**").hasAuthority("AUTH_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

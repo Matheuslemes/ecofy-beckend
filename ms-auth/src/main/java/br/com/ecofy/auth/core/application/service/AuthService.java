@@ -270,6 +270,14 @@ public class AuthService implements AuthenticateUserUseCase, RefreshTokenUseCase
     // Helpers de domínio / regras de grant
 
     private void validateClientForPasswordGrant(ClientApplication client) {
+
+        log.debug(
+                "[AuthService] - [validateClientForPasswordGrant] -> clientId={} type={} grantTypes={}",
+                client.clientId(),
+                client.clientType(),
+                client.grantTypes()
+        );
+
         if (!client.isActive()) {
             log.warn(
                     "[AuthService] - [validateClientForPasswordGrant] -> Client inativo clientId={}",
@@ -295,6 +303,7 @@ public class AuthService implements AuthenticateUserUseCase, RefreshTokenUseCase
             throw new IllegalArgumentException("Client type not allowed for PASSWORD grant");
         }
     }
+
 
     private void validateClientForRefreshGrant(ClientApplication client) {
         if (!client.isActive()) {

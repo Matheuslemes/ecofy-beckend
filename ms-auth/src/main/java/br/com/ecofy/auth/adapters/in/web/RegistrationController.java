@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/register", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,7 +59,8 @@ public class RegistrationController {
                 request.firstName(),
                 request.lastName(),
                 request.locale() != null ? request.locale() : "pt-BR",
-                false // em prod, normalmente não auto-confirma
+                false,
+                List.of("AUTH_USER") // em prod, normalmente não auto-confirma
         );
 
         var user = registerUserUseCase.register(cmd);
