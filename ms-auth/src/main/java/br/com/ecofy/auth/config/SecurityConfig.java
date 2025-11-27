@@ -52,6 +52,7 @@ public class SecurityConfig {
                                 "/api/password/**",
                                 "/.well-known/jwks.json"
                         ).permitAll()
+                        .requestMatchers("/api/admin/users").permitAll()
                         .requestMatchers("/api/admin/**").hasAuthority("AUTH_ADMIN")
                         .anyRequest().authenticated()
                 )

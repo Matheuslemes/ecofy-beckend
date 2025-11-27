@@ -3,7 +3,6 @@ package br.com.ecofy.auth.adapters.out.persistence;
 import br.com.ecofy.auth.adapters.out.persistence.entity.*;
 import br.com.ecofy.auth.core.domain.*;
 import br.com.ecofy.auth.core.domain.enums.GrantType;
-import br.com.ecofy.auth.core.domain.enums.TokenType;
 import br.com.ecofy.auth.core.domain.valueobject.AuthUserId;
 import br.com.ecofy.auth.core.domain.valueobject.EmailAddress;
 import br.com.ecofy.auth.core.domain.valueobject.PasswordHash;
@@ -19,12 +18,12 @@ final class PersistenceMapper {
         throw new AssertionError("PersistenceMapper is a utility class and should not be instantiated");
     }
 
-    // AuthUser
+    // ================== AuthUser ==================
     static AuthUserEntity toEntity(AuthUser user) {
         Objects.requireNonNull(user, "user must not be null");
 
         AuthUserEntity entity = new AuthUserEntity();
-        entity.setId(user.id().value());
+        entity.setId(user.id().value());          // UUID
         entity.setEmail(user.email().value());
         entity.setPasswordHash(user.passwordHash().value());
         entity.setStatus(user.status());
@@ -37,18 +36,21 @@ final class PersistenceMapper {
         entity.setLastLoginAt(user.lastLoginAt());
         entity.setFailedLoginAttempts(user.failedLoginAttempts());
 
-        // Roles e permissions normalmente são carregados via relacionamento JPA
-        // (RoleEntity <-> AuthUserEntity). Aqui não setamos para evitar duplicidade
-        // de fonte de verdade; o adapter responsável por persistir pode cuidar disso.
+        // Roles/permissions via relacionamentos JPA (evita duplicidade de fonte de verdade)
 
         return entity;
     }
 
-    static AuthUser toDomain(AuthUserEntity e, Set<RoleEntity> roleEntities, Set<PermissionEntity> permEntities) {
+    static AuthUser toDomain(
+            AuthUserEntity e,
+            Set<RoleEntity> roleEntities,
+            Set<PermissionEntity> permEntities
+    ) {
         Objects.requireNonNull(e, "AuthUserEntity must not be null");
 
         Set<RoleEntity> safeRoleEntities =
                 roleEntities == null ? Collections.emptySet() : roleEntities;
+
         Set<PermissionEntity> safePermEntities =
                 permEntities == null ? Collections.emptySet() : permEntities;
 
@@ -63,7 +65,7 @@ final class PersistenceMapper {
                 .collect(Collectors.toUnmodifiableSet());
 
         return new AuthUser(
-                new AuthUserId(e.getId()),
+                new AuthUserId(e.getId()),              // UUID -> AuthUserId
                 new EmailAddress(e.getEmail()),
                 new PasswordHash(e.getPasswordHash()),
                 e.getStatus(),
@@ -98,6 +100,7 @@ final class PersistenceMapper {
         return new Permission(e.getName(), e.getDescription(), e.getDomain());
     }
 
+    // ================== ClientApplication ==================
     static ClientApplication toDomain(ClientApplicationEntity e) {
         Objects.requireNonNull(e, "ClientApplicationEntity must not be null");
 
@@ -139,8 +142,6 @@ final class PersistenceMapper {
         );
     }
 
-
-
     static ClientApplicationEntity toEntity(ClientApplication c) {
         Objects.requireNonNull(c, "clientApplication must not be null");
 
@@ -160,19 +161,19 @@ final class PersistenceMapper {
                 .build();
     }
 
-    // RefreshToken
+    // ================== RefreshToken ==================
     static RefreshToken toDomain(RefreshTokenEntity e) {
         Objects.requireNonNull(e, "RefreshTokenEntity must not be null");
 
         return new RefreshToken(
-                e.getId(),
+                e.getId(),                              // UUID
                 e.getTokenValue(),
-                new AuthUserId(e.getUserId()),
+                new AuthUserId(e.getUserId()),          // UUID -> AuthUserId
                 e.getClientId(),
                 e.getIssuedAt(),
                 e.getExpiresAt(),
                 e.isRevoked(),
-                e.getType()
+                e.getType()                             // TokenType (enum)
         );
     }
 
@@ -180,18 +181,18 @@ final class PersistenceMapper {
         Objects.requireNonNull(t, "refreshToken must not be null");
 
         return RefreshTokenEntity.builder()
-                .id(t.id())
+                .id(t.id())                             // UUID
                 .tokenValue(t.tokenValue())
-                .userId(t.userId().value())
+                .userId(t.userId().value())             // AuthUserId -> UUID
                 .clientId(t.clientId())
                 .issuedAt(t.issuedAt())
                 .expiresAt(t.expiresAt())
                 .revoked(t.isRevoked())
-                .type(TokenType.REFRESH)
+                .type(t.type())                         // usa o enum vindo do domínio
                 .build();
     }
 
-    // JWK
+    // ================== JWK ==================
     static JwkKey toDomain(JwkKeyEntity e) {
         Objects.requireNonNull(e, "JwkKeyEntity must not be null");
 

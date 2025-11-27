@@ -17,8 +17,8 @@ import java.util.UUID;
  */
 public class RefreshToken {
 
-    /** Identificador interno do refresh token (UUID string). */
-    private final String id;
+    /** Identificador interno do refresh token (UUID). */
+    private final UUID id;
 
     /** Valor do token entregue ao cliente (opaco ou JWT). */
     private final String tokenValue;
@@ -41,7 +41,7 @@ public class RefreshToken {
     /** Tipo do token – aqui deve ser sempre REFRESH. */
     private final TokenType type;
 
-    public RefreshToken(String id,
+    public RefreshToken(UUID id,
                         String tokenValue,
                         AuthUserId userId,
                         String clientId,
@@ -86,7 +86,7 @@ public class RefreshToken {
         Instant exp = now.plusSeconds(ttlSeconds);
 
         return new RefreshToken(
-                UUID.randomUUID().toString(),
+                UUID.randomUUID(),
                 tokenValue,
                 userId,
                 clientId,
@@ -98,7 +98,7 @@ public class RefreshToken {
     }
 
     // Getters (imutáveis externamente)
-    public String id() {
+    public UUID id() {
         return id;
     }
 
@@ -193,7 +193,7 @@ public class RefreshToken {
     public String toString() {
         String masked = tokenValue.length() > 12 ? tokenValue.substring(0, 12) + "..." : "***";
         return "RefreshToken{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", tokenValue='" + masked + '\'' +
                 ", userId=" + userId.value() +
                 ", clientId='" + clientId + '\'' +

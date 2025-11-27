@@ -29,7 +29,7 @@ public class AuthUserEntity {
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 32, nullable = false)
+    @Column(name = "status", length = 50, nullable = false)
     private AuthUserStatus status;
 
     @Column(name = "email_verified", nullable = false)
